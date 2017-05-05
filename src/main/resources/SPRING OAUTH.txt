@@ -1,0 +1,106 @@
+/**********************************************************************************************************************************************/
+METODO GET
+http://localhost:8080/SpringRestOauth/fruits
+
+CONSULTA
+
+RESPUESTA
+
+{
+  "error": "unauthorized",
+  "error_description": "An Authentication object was not found in the SecurityContext"
+}
+
+/**********************************************************************************************************************************************/
+METODO POST - GENERA EL TOKEN
+http://localhost:8080/SpringRestOauth/oauth/token?grant_type=password&username=admin&password=admin123
+
+ADICIONAL - SOLO PARA LA GENERACION DE TOKEN
+1.-SELECCIONAR AUTHORIZATION
+2.-TYPE 	: BASIC AUTH
+3.-USERNAME : jambrocio
+4.-PASSWORD	: virgo1984
+
+CONSULTA
+
+RESPUESTA
+
+{
+  "access_token": "15c0fcb1-a60c-45c6-8440-b57ca57174f8",
+  "token_type": "bearer",
+  "refresh_token": "8516b14d-94ad-4563-8d09-35dafee6273f",
+  "expires_in": 119,
+  "scope": "read write trust"
+}
+
+/**********************************************************************************************************************************************/
+METODO GET
+http://localhost:8080/SpringRestOauth/fruits?access_token=15c0fcb1-a60c-45c6-8440-b57ca57174f8
+
+CONSULTA
+
+RESPUESTA - CUANDO EL TOKEN AUN NO EXPIRA
+[
+  {
+    "id": 1,
+    "name": "Apple",
+    "produceBy": "USA",
+    "note": "Delicious flavour"
+  },
+  {
+    "id": 2,
+    "name": "Orange",
+    "produceBy": "Indonesia",
+    "note": "Delicious flavour"
+  },
+  {
+    "id": 3,
+    "name": "Banana",
+    "produceBy": "Cuba",
+    "note": "Good quality"
+  }
+]
+
+RESPUESTA - CUANDO EL TOKEN YA EXPIRO
+{
+  "error": "invalid_token",
+  "error_description": "Access token expired: 15c0fcb1-a60c-45c6-8440-b57ca57174f8"
+}
+
+/**********************************************************************************************************************************************/
+METODO GET
+http://localhost:8080/SpringRestOauth/fruits/1?access_token=296b6bad-b4db-421d-b9da-a578178a2e96
+
+CONSULTA
+
+RESPUESTA
+{
+  "id": 1,
+  "name": "Apple",
+  "produceBy": "USA",
+  "note": "Delicious flavour"
+}
+
+/**********************************************************************************************************************************************/
+METODO POST - GENERA UN NUEVO TOKEN A PARTIR DEL REFRESH_TOKEN
+http://localhost:8080/SpringRestOauth/oauth/token?grant_type=refresh_token&refresh_token=9da532ef-52fb-45da-8514-2b659752d6f1
+
+ADICIONAL - SOLO PARA REFRESH EL TOKEN
+1.-SELECCIONAR AUTHORIZATION
+2.-TYPE 	: BASIC AUTH
+3.-USERNAME : jambrocio
+4.-PASSWORD	: virgo1984
+
+CONSULTA
+
+RESPUESTA
+
+{
+  "access_token": "15c0fcb1-a60c-45c6-8440-b57ca57174f8",
+  "token_type": "bearer",
+  "refresh_token": "8516b14d-94ad-4563-8d09-35dafee6273f",
+  "expires_in": 119,
+  "scope": "read write trust"
+}
+
+/**********************************************************************************************************************************************/
